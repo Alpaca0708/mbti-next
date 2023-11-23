@@ -79,11 +79,14 @@ export default function Home() {
        
       </div>
       <div>
-        {JSON.stringify(match_data)}
-        <button onClick={postGPTresponse}>click</button>
+        測試資料：{JSON.stringify(match_data)}
+
+      </div>
+      <div>
+        <button onClick={postGPTresponse}>測試</button>
       </div>
 
-    <div style={loading||(information&&information.lover)?{display:'flex',width:'100%',height:'100vh',justifyContent:'center',position:'fixed'}:{display:'none'}}>
+    <div style={loading||(information&&information.lover)?{display:'flex',width:'100%',height:'100vh',justifyContent:'center',position:'fixed',top:'20px'}:{display:'none'}}>
       <div style={{backgroundColor:'white',width:'80%',height:'80vh',border:'1px solid black',padding:'30px'}}>
         {loading&&<p>loading...(約等待30秒產生AI報告)</p>}
         <h3>生活</h3>
