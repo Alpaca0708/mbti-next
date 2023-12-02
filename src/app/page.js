@@ -3,103 +3,304 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import {useState,useEffect} from 'react'
+import { Button, ButtonGroup } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
+
 
 export default function Home() {
 
-  const [information,setInformation] = useState(null)
-  const [loading,setLoading] = useState(false)
+  
+  
+  const MBTIOptions = ["請選擇", "INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ","ISTP", "ISFP", "ESTP", "ESFP" ]
 
-  const [match_data,setMatchData] = useState({
-    male:{
-      mbti:'ENTP',
-      birthday:'1991/05/02',
-      job:'engineer',
-    },
+  const [selectMBTI,setSelectMBTI] = useState('ENTP') 
+  const MBTIChanged =(event) => {
+    setSelectMBTI(event.target.value);
+  };
+  const [selectMBTI2,setSelectMBTI2] = useState('ENFP') 
+  const MBTIChanged2 =(event) => {
+    setSelectMBTI2(event.target.value);
+  };
 
-    female:{
-      mbti:'ENFP',
-      birthday:'1989/11/03',
-      job:'sales',
-    }
-  })
+  const [inputValue, setInputValue] = useState('');   
+  const jobChange = (e) => {
+    setInputValue(e.target.value);
+  };           
+  const [inputValue2, setInputValue2] = useState('')
+  const jobChange2 = (e) => {
+    setInputValue2(e.target.value);
+  }; 
 
-  const postGPTresponse = async() => {
-    setLoading(true)
+  const [inputDate, setInputDate] = useState ('1991-05-02')
+  const dateChange = (e) => {
+    setInputDate(e.target.value);
+  }; 
+
+  const [inputDate2, setInputDate2] = useState ('1989-11-03')
+  const dateChange2 = (e) => {
+    setInputDate2(e.target.value);
+  }; 
+  const [popUp, setPopUp]= useState(false)
+
+
+  const [result, setResult] = useState({})
+
+  const popUpFunction = async() => {
+    setPopUp(true);
+    const matchData = {
+      male:{        
+        MBTI: selectMBTI,
+        Birthday: inputDate,
+        job: inputValue,
+        }
+      ,
+      female:{
+        MBTI: selectMBTI2,
+        Birthday: inputDate2,
+        job: inputValue2,
+      }      
+    };
     const response = await fetch('/api/gpts',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
-      body: JSON.stringify(match_data)
+      body: JSON.stringify(matchData)
     })
     const data = await response.json()
-    // {
-    //   "compatibility_report": {
-    //     "life_compatibility": {
-    //       "narrative": "在日常生活中，ENFJ和INTJ可能會遇到一些挑戰。作為感受型的ENFJ，他會注重和諧和人際關係，而INTJ則是理性和自我導向，可能在面對情感表達和需求時顯得比較冷漠。然而，如果兩人能在溝通和相互尊重上達成共識，他們可以學習如何平衡彼此的不同需求，建立一個充滿愛與理解的共同生活環境。",
-    //       "score": 70
-    //     },
-    //     "fun_compatibility": {
-    //       "narrative": "在尋求樂趣和共享興趣方面，這對搭檔可能需要進行一些妥協。ENFJ通常喜歡社交性的活動，而INTJ可能更喜歡安靜的環境和深入的對話。不過，他們共有的創新精神和對新知的好奇心可以使他們找到共同點，例如進行知識共享或解決問題的遊戲會是兩人都能享受的活動。",
-    //       "score": 65
-    //     },
-    //     "work_compatibility": {
-    //       "narrative": "工作合作方面，ENFJ的工程師和INTJ的設計師可以形成一個互補性很高的團隊。ENFJ擅長推進項目和激勵團隊，而INTJ則善於規劃和系統化的思維。兩者的不同天賦可以促進一個既有創意又有效率的工作環境。這種互補可以幫助彼此在職業上成長，也有助於建立彼此間的尊重和價值認同。",
-    //       "score": 80
-    //     },
-    //     "overall_compatibility_score": 73,
-    //     "summary": "總而言之，這對ENFJ和INTJ在感情兼容性上得到73分，表明他們有相當好的潛力去建立一段穩定而充實的關係。儘管他們在一些方面可能有不同，但透過有效的溝通和相互理解，可以克服這些差異，共創美好未來。"
-    // }
-    setInformation({
-      ...information,
-      lover:data
-    })
-    console.log(data)
-    setLoading(false)
-    console.log(information)
+    console.log("data:",data)
+    setResult(data)
+    
+  };
+  const closePopup= () =>{
+    setPopUp(false)
   }
 
-  useEffect(()=>{
-    // postGPTresponse()
-  },[])
+  
+
+  const ABC = ['rabbit']
+  
+
   return (
-    <main className={styles.main}>
+    <ChakraProvider>
 
-      <div className={styles.center}>
-        <p>hello</p>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <p>MBTI</p>
-       
-      </div>
-      <div>
-        測試資料：{JSON.stringify(match_data)}
+      <div className="App">
+        <header style= {{ width: '100%', height: '265px', flexShrink: '0', alignItems: 'center', flexDirection: 'column', }}>
+           <Image src={'/Bubble.jpg'} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
+        </header>
+        <div style= {{display:'flex', padding:'5px' }}>
 
-      </div>
-      <div>
-        <button onClick={postGPTresponse}>測試</button>
-      </div>
+      <div style = {{width:'100%', display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: '5px', padding:'15px'}}>
 
-    <div style={loading||(information&&information.lover)?{display:'flex',width:'100%',height:'100vh',justifyContent:'center',position:'fixed',top:'20px'}:{display:'none'}}>
-      <div style={{backgroundColor:'white',width:'80%',height:'80vh',border:'1px solid black',padding:'30px'}}>
-        {loading&&<p>loading...(約等待30秒產生AI報告)</p>}
-        <h3>生活</h3>
-        <p>{information?.lover?.compatibility_report.life_compatibility.narrative}</p>
-        <h3>樂趣</h3>
-        <p>{information?.lover?.compatibility_report.fun_compatibility.narrative}</p>
-        <h3>工作</h3>
-        <p>{information?.lover?.compatibility_report.work_compatibility.narrative}</p>
-        <h3>綜合分數</h3>
-        <h2 style={{color:'red'}}>{information?.lover?.compatibility_report.overall_compatibility_score}</h2>
-        <button onClick={()=>setInformation(null)}>close</button>
+
+          <header type={{color: 'var(--heading-title-color, #152536)', fontFamily: 'Lemonada', fontSize: '24px', fontStyle: 'normal', fontWeight: '575', lineHeight: 'normal',}}>
+          Male
+          </header>
+        <div style={{display: 'flex', alignItems: 'center', borderRadius: '12px', border: '1px solid #7F9EBD', background: 'var(--default-white, #FFF)',}}>
+
+
+            <div style = {{width: '324px',height: '265px',flexShrink: '0', }}>
+              <Image src={"/ENFP.jpg"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
+            </div>
+
+            <div style= {{display: 'flex', width: '348px',padding: '33px 45px',flexDirection: 'column',justifyContent: 'center', alignItems: 'center', gap: '33px', alignSelf: 'stretch',}}>            
+                <select style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                value= {selectMBTI} onChange= {MBTIChanged}>
+                      
+                      {MBTIOptions.map((option, index) =>(
+                        <option key={index} value={option}>
+                          {option}
+                          </option>
+                      ))} 
+                      
+                </select>
+
+                <input style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                  type = "date" value = {inputDate} onChange={dateChange}/>
+                <input placeholder='input more information' style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                  type= "text" value={inputValue} onChange={jobChange} />            
+            </div>
+        </div>
       </div>
+                    
+
+
+<div style = {{width:'100%', display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: '5px', padding:'15px'}}>
+<header type={{color: 'var(--heading-title-color, #152536)', fontFamily: 'Lemonada', fontSize: '24px', fontStyle: 'normal', fontWeight: '575', lineHeight: 'normal',}}>
+  Femle</header>
+<div style={{display: 'flex', alignItems: 'center', borderRadius: '12px', border: '1px solid #7F9EBD', background: 'var(--default-white, #FFF)',}}>
+        <div style = {{width: '324px',height: '265px',flexShrink: '0', }}>
+          <Image src={"/ENTP.jpg"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
+        </div>
+        <div style= {{display: 'flex', width: '348px',padding: '33px 45px',flexDirection: 'column',justifyContent: 'center', alignItems: 'center', gap: '33px', alignSelf: 'stretch',}}>
+          
+          <select style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+          value= {selectMBTI2} onChange= {MBTIChanged2}>
+                
+                {MBTIOptions.map((option, index) =>(
+                  <option key={index} value={option}>
+                    {option}
+                    </option>
+                ))} 
+                
+          </select>
+
+          <input style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                                type = "date" value = {inputDate2} onChange={dateChange2}/>
+                                <input  placeholder='input more information'  style = {{width: '300px', height: '30px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                    type= "text" value={inputValue2} onChange={jobChange2} />
+
+                    </div>
+            </div>
+
+          </div>
+        </div>
+        <div style = {{alignItems:'center',display:'flex',justifyContent:'center',marginTop:'30px'}}>
+    <footer style ={{width:'1032px', height:'291px', background: 'beige', display:'flex', justifyContent:'space-around', paddingTop: '25px', }}>
+
+
+          <div style = {{flexDirection:'column',}}>  
+            <div   style={{
+            width: '185px',
+            height: '185px',
+            display:'inline-block',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            position: 'relative',
+          }} >
+              <Image src = {"/couple-holiday.png"}  width={0} height={0}   sizes='100vw'  style={{
+              width: '165%',
+              height: '165%',
+              objectFit: 'cover', 
+              position: 'absolute', 
+              top: '-33%', 
+              left: '-32%', // 調整圖片的左邊距
+              transform: 'translate(0, 0)', // 將變換設置為初始位置
+
+            }}/>
+
+
+            </div>
+              <div style = {{width: '185px', justifyContent:'center', display:'flex', flexWrap:'wrap',}}>
+                <p style = {{color: 'var(--gray-700, #2D3748)',textAlign: 'center', fontFamily: 'Inter', fontSize: '16px', fontStyle: 'normal', fontWeight: '700', lineHeight: '20px',}}>Get your score how suitable to be Lover
+                </p>
+              </div>
+
+              <div>
+
+                    <Button style= {{colorScheme:'yellow ', size:'sm',}}onClick={popUpFunction}>
+                        Get Report
+                      </Button>
+
+              </div>
+              </div>
+              <div style= {{width: '1px', height: '190.003px',background: '#A9C6A4',}}></div>
+              <div style = {{flexDirection:'column',}}> 
+                <div   style={{
+                  width: '185px',
+                  height: '185px',
+                  display:'inline-block',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  }} >
+                  <Image src = {"/two-friends.png"}  width={0} height={0}   sizes='100vw'  style={{
+                  width: '165%',
+                  height: '165%',
+                  objectFit: 'cover', 
+                  position: 'absolute', 
+                  top: '-35%', 
+                  left: '-32%', // 調整圖片的左邊距
+                  transform: 'translate(0, 0)', // 將變換設置為初始位置
+
+                }}/>
+                    </div>
+                    <div style = {{width: '185px', justifyContent:'center', display:'flex', flexWrap:'wrap',}}>
+                    <p style = {{color: 'var(--gray-700, #2D3748)',textAlign: 'center', fontFamily: 'Inter', fontSize: '16px', fontStyle: 'normal', fontWeight: '700', lineHeight: '20px',}}>Get your score how suitable to be Friends
+                    </p>
+                  </div>        
+
+                      <div>
+
+                            <Button style= {{colorScheme:'yellow', size:'sm',}} onClick={popUpFunction}>
+                                Get Report
+                              </Button>
+
+                      </div>
+
+
+            </div>
+            <div style= {{width: '1px', height: '190.003px',background: '#A9C6A4',}}></div>
+            <div style = {{flexDirection:'column',}}>
+
+            <div   style={{
+            width: '185px',
+            height: '185px',
+            display:'inline-block',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            position: 'relative',
+          }} >
+              <Image src = {"/family-members.png"}  sizes='100vw' width={0} height={0}   style={{
+              width: '165%',
+              height: '165%',
+              objectFit: 'cover', 
+              position: 'absolute', 
+              top: '-35%', 
+              left: '-32%', // 調整圖片的左邊距
+              transform: 'translate(0, 0)', // 將變換設置為初始位置
+              
+            }}/>
+
+            </div>
+            <div style = {{width: '185px', justifyContent:'center', display:'flex', flexWrap:'wrap',}}>
+                <p style = {{color: 'var(--gray-700, #2D3748)',textAlign: 'center', fontFamily: 'Inter', fontSize: '16px', fontStyle: 'normal', fontWeight: '700', lineHeight: '20px',}}>Get your score how suitable to be Family
+                </p>
+              </div>
+
+              <div>
+
+                    <Button style= {{colorScheme:'yellow', size:'sm'}} onClick={popUpFunction}>
+                        Get Report
+                      </Button>
+                </div>
+           </div>
+
+
+
+      
+    </footer>
     </div>
-    </main>
+
+
+    {popUp && (
+                <div style={{ display:'flex', justifyContent: 'center', alignItems: 'center',}}>
+                        <div style={{justifyContent: 'center', alignItems: 'center', width:'300px', height:'360px', border:'1px solid #000'}}>
+                              {/* condition ? expressionIfTrue : expressionIfFalse */}
+                              {/* <p>male:</p>
+                              {selectMBTI}<br/>
+                              {inputDate}<br/>
+                              {inputValue}<br/>
+                              <br/>
+                              <p>female</p>
+                              {selectMBTI2}<br/>
+                              {inputDate2}<br/>
+                              {inputValue2}<br/>
+                              <br/> */}
+                              {/* {console.log (ABC)} */}
+                              {/* <p>Match Data: {JSON.stringify(matchData)}</p> */}
+                              {/* {<p>Result Data: {JSON.stringify(result)}</p>} */}
+                              <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>
+                              <div>{result.compatibility_report?.fun_compatibility?.score}</div>
+
+                              
+                              <button onClick={closePopup}>Close</button>
+                        </div>
+                  </div>
+                  )}
+
+  </div>
+  </ChakraProvider>
+
   )
 }
