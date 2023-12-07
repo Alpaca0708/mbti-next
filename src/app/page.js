@@ -32,22 +32,22 @@ export default function Home() {
     setInputValue2(e.target.value);
   }; 
 
-  const [inputDate, setInputDate] = useState ('1991-05-02')
+  const [inputDate, setInputDate] = useState ('Birthday')
   const dateChange = (e) => {
     setInputDate(e.target.value);
   }; 
 
-  const [inputDate2, setInputDate2] = useState ('1989-11-03')
+  const [inputDate2, setInputDate2] = useState ('Birthday')
   const dateChange2 = (e) => {
     setInputDate2(e.target.value);
   }; 
-  const [popUp, setPopUp]= useState(true)
+  const [popUp, setPopUp]= useState(false)
 
 
   const [result, setResult] = useState({})
 
   const popUpFunction = async() => {
-    setPopUp(false);
+    setPopUp(true);
     const matchData = {
       male:{        
         MBTI: selectMBTI,
@@ -218,11 +218,9 @@ export default function Home() {
                   </div>        
 
                       <div style= {{textAlign: 'center'}}>
-
                             <Button colorScheme='yellow' size='sm' onClick={popUpFunction}>
                                 Get Report
                               </Button>
-
                       </div>
 
 
@@ -269,34 +267,42 @@ export default function Home() {
 
 
     {popUp && (
-         <div style={{  display: 'none',
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)', /* 半透明的遮罩背景 */
-            zIndex: '1000', /* 置於最上層 */ }}>
-            <div style= {{justifyContent:'center',textAlign:'center',  
-                position: 'absolute',
-                top: '50%', /* 將窗口置中 */
-                left: '50%',
-                transform: 'translate(-50%, -50%)', /* 水平和垂直置中 */
-                backgroundColor: 'white',
-                border: '5px solid #ca64da',
-                borderRadius: '20px',
-                padding: '20px',
-                zIndex: '1001', /* 置於遮罩之上 */}}>
-                    
+         <div style={{  
+          // display: 'block',
+            // position: 'fixed',
+            // top: '0',
+            // left: '0',
+            // width: '100%',
+            // height: '100%',
+            // backgroundColor: '#000814', /* 半透明的遮罩背景 */
+            // zIndex: '1000', /* 置於最上層 */ }}>
+          position:'fixed', top:'0', left:'0',width:'100%', height:'100%', background:'#58697466',zIndex: '1000'}}>
+            <div 
+            style= {{ 
+              position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '7px solid #CDEFC7', borderRadius: '10px',zIndex: '1001',textAlign:'center',padding:'5%',background:'#CDEFC7'
+                // position: 'absolute',
+                // top: '50%', /* 將窗口置中 */
+                // left: '50%',
+                // transform: 'translate(-50%, -50%)', /* 水平和垂直置中 */
+                // backgroundColor: 'white',
+                // border: '5px solid #e5e5e5',
+                // borderRadius: '20px',
+                // padding: '20px',
+                // zIndex: '1001', /* 置於遮罩之上 */
+                       }}
+         >
+                              <div><Image src={'/Star.svg'}  width={50} height={50}  sizes='100vw'></Image>
+                              <p>Rate</p>
+                              {result.compatibility_report?.fun_compatibility?.score}</div>
                               <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>
-                              <div>{result.compatibility_report?.fun_compatibility?.score}</div>
+                              
 
                               
                               <Button colorScheme='orange' size='xs' onClick={closePopup}>Close</Button>
                        
             </div>
          </div>
-                   )} 
+                     )}  
 
   </div>
   </ChakraProvider>
