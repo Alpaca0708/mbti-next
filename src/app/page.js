@@ -85,7 +85,7 @@ export default function Home() {
 
       <div className="App">
         <header style= {{ width: '100%', height: '265px', flexShrink: '0', alignItems: 'center', flexDirection: 'column', }}>
-           <Image src={'/Bubble.jpg'} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
+           <Image src={'/banner2.png'} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
         </header>
         <div style= {{width:'100%', display:'inline-flex', padding:'5px', alignItems:'flex-start' }}>
 
@@ -99,7 +99,7 @@ export default function Home() {
 
 
             <div style = {{width: '324px',height: '265px',flexShrink: '0', }}>
-              <Image src={"/ENFP.jpg"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
+              <Image src={"/ENTP-DALL.png"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
             </div>
 
             <div style= {{display: 'flex', width: '100%',padding: '33px 45px',flexDirection: 'column',justifyContent: 'center', alignItems: 'center', gap: '33px', alignSelf: 'stretch',}}>            
@@ -129,7 +129,7 @@ export default function Home() {
   Femle</header>
 <div style={{width:'100%', display: 'flex', alignItems: 'center', borderRadius: '12px', border: '1px solid #7F9EBD', background: 'var(--default-white, #FFF)',}}>
         <div style = {{width: '324px',height: '265px',flexShrink: '0', }}>
-          <Image src={"/ENTP.jpg"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
+          <Image src={"/ENFP-DALL.png"}  width={0} height={0}  sizes='100vw' style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px',}}></Image>
         </div>
         <div style= {{display: 'flex', width: '100%',padding: '33px 45px',flexDirection: 'column',justifyContent: 'center', alignItems: 'center', gap: '33px', alignSelf: 'stretch',}}>
           
@@ -292,11 +292,9 @@ export default function Home() {
                        }}
          >
                               <div><Image src={'/Star.svg'}  width={50} height={50}  sizes='100vw'></Image>
-                              <p>Rate</p>
-                              {result.compatibility_report?.fun_compatibility?.score}</div>
-                              <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>
-                              
-
+                              <p>Rate</p></div>
+                              <div>{result.compatibility_report?.fun_compatibility?.score}</div>
+                              <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>                              
                               
                               <Button colorScheme='orange' size='xs' onClick={closePopup}>Close</Button>
                        
