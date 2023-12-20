@@ -50,17 +50,20 @@ export default function Home() {
     setPopUp(true);
     const matchData = {
       male:{        
-        MBTI: selectMBTI,
-        Birthday: inputDate,
+        mbti: selectMBTI,
+        birthday: inputDate,
         job: inputValue,
         }
       ,
       female:{
-        MBTI: selectMBTI2,
-        Birthday: inputDate2,
+        mbti: selectMBTI2,
+        birthday: inputDate2,
         job: inputValue2,
       }      
     };
+
+    console.log('matchData:::',matchData)
+
     
     const response = await fetch('/api/gpts',{
       method: 'POST',
@@ -85,7 +88,7 @@ export default function Home() {
 
       <div className="App">
         <header style= {{ width: '100%', height: '265px', flexShrink: '0', alignItems: 'center', flexDirection: 'column', }}>
-           <Image src={'/banner2.png'} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
+           <Image src={"/Banner2.png"} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
         </header>
         <div style= {{width:'100%', display:'inline-flex', padding:'5px', alignItems:'flex-start' }}>
 
@@ -167,12 +170,12 @@ export default function Home() {
             overflow: 'hidden',
             position: 'relative',
           }} >
-              <Image src = {"/couple-holiday.png"}  width={0} height={0}   sizes='100vw'  style={{
+              <Image src = {"/couple.png"}  width={0} height={0}   sizes='100vw'  style={{
               width: '165%',
               height: '165%',
               objectFit: 'cover', 
               position: 'absolute', 
-              top: '-33%', 
+              top: '-23%', 
               transform: 'translate(0, 0)', // 將變換設置為初始位置
 
             }}/>
@@ -202,7 +205,7 @@ export default function Home() {
                   overflow: 'hidden',
                   position: 'relative',
                   }} >
-                  <Image src = {"/two-friends.png"}  width={0} height={0}   sizes='100vw'  style={{
+                  <Image src = {"/friend.png"}  width={0} height={0}   sizes='100vw'  style={{
                   width: '165%',
                   height: '165%',
                   objectFit: 'cover', 
@@ -236,7 +239,7 @@ export default function Home() {
             overflow: 'hidden',
             position: 'relative',
           }} >
-              <Image src = {"/family-members.png"}  sizes='100vw' width={0} height={0}   style={{
+              <Image src = {"/family.png"}  sizes='100vw' width={0} height={0}   style={{
               width: '165%',
               height: '165%',
               objectFit: 'cover', 
@@ -291,7 +294,8 @@ export default function Home() {
                 // zIndex: '1001', /* 置於遮罩之上 */
                        }}
          >
-                              <div><Image src={'/Star.svg'}  width={50} height={50}  sizes='100vw'></Image>
+                        {/* {whichButton=='fun'?<div>fun</div>:whichButton=='work'?<div>work</div>:<div>family</div>} */}
+                              <div><Image src={"/Star.svg"}  width={50} height={50}  sizes='100vw'></Image>
                               <p>Rate</p></div>
                               <div>{result.compatibility_report?.fun_compatibility?.score}</div>
                               <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>                              
