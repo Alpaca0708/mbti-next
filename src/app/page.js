@@ -43,8 +43,14 @@ export default function Home() {
   }; 
   const [popUp, setPopUp]= useState(false)
 
+  const [popReport, setPopReport]=useState({ isOpen: false, type: null })
+  const openReport = (type) =>{
+    setPopReport({ isOpen: true, type: type });
+    }
+
 
   const [result, setResult] = useState({})
+
 
   const popUpFunction = async() => {
     setPopUp(true);
@@ -64,27 +70,46 @@ export default function Home() {
 
     console.log('matchData:::',matchData)
 
-    
-    const response = await fetch('/api/gpts',{
+
+    const response = await fetch('/api/gpts',{   //打到後端的資料
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
       body: JSON.stringify(matchData)
-    })
-    const data = await response.json()
+    })                                    
+    const data = await response.json() //後端傳回給前端的資料
     console.log("data:",data)
     setResult(data)
     
   };
+
+
+
   const closePopup= () =>{
-    setPopUp(false)
+    setPopReport(false)
   }
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (result && result.compatibility_report) {
+      setLoading(false); // 如果 result 有数据，停止显示加载动画
+    }
+  }, [result]); 
 
   
 
   return (
     <ChakraProvider>
+      <div style= {{width:'auto', height:'auto', overflow: 'hidden', position: 'relative', minWidth: '500px', minHeight: '500px' }}>
+        <Image src={"/Banner2.png"} width={0} height={0} sizes='100vw' 
+        style={{width:'100%', height:'100%', objectFit: 'cover', }}></Image>
+        
+
+      </div>
+
+
+
 
       <div className="App">
         <header style= {{ width: '100%', height: '265px', flexShrink: '0', alignItems: 'center', flexDirection: 'column', }}>
@@ -119,7 +144,7 @@ export default function Home() {
 
                 <input style = {{width: '300px', height: '30px', padding:'3px', borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
                   type = "date" value = {inputDate} onChange={dateChange}/>
-                <input placeholder='input more information' style = {{width: '300px', height: '30px', padding:'3px', borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+                <input placeholder='input your job or else' style = {{width: '300px', height: '30px', padding:'3px', borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
                   type= "text" value={inputValue} onChange={jobChange} />            
             </div>
         </div>
@@ -149,7 +174,7 @@ export default function Home() {
 
           <input style = {{width: '300px', height: '30px',padding:'3px',borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
                                 type = "date" value = {inputDate2} onChange={dateChange2}/>
-          <input  placeholder='input more information'  style = {{width: '300px', height: '30px', padding:'3px', borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
+          <input  placeholder='input your job or else'  style = {{width: '300px', height: '30px', padding:'3px', borderRadius: '6px', border: '1px solid #58674F', opacity: '0.5', background: 'var(--white, #FFF)',}}
                     type= "text" value={inputValue2} onChange={jobChange2} />
 
                     </div>
@@ -157,6 +182,49 @@ export default function Home() {
 
           </div>
         </div>
+
+        <div style={{display:'flex', alignItems:'center',flexDirection:'column'}}>
+          <Button colorScheme='yellow' size='sm' onClick={popUpFunction}>Click Make Magic</Button>
+          {/* isDisabled={!(result&&result.compatibility_report)} */}
+          {popUp &&(
+            <div  >
+              {loading && 
+              (<div className={styles.loadWrapp}>
+              <div className={styles.load2}>
+              <p>Data Loading...</p>  
+              <div className={styles.line}></div>
+              <div className={styles.line}></div>
+              <div className={styles.line}></div>
+              </div>
+              </div>
+              )}            
+              <div style={{
+                display:'none',
+                alignItems:'center'
+              }}>
+                            <div><Image src={"/Star.svg"}  width={50} height={50}  sizes='100vw'></Image>
+                            <p>Rate</p></div>
+                            <div>{result.compatibility_report?.couple_compatibility?.score}</div>
+                            <div>{result.compatibility_report?.couple_compatibility?.narrative}</div>   
+                            <div><Image src={"/Star.svg"}  width={50} height={50}  sizes='100vw'></Image>
+                            <p>Rate</p></div>
+                            <div>{result.compatibility_report?.friends_compatibility?.score}</div>
+                            <div>{result.compatibility_report?.friends_compatibility?.narrative}</div>   
+                            <div><Image src={"/Star.svg"}  width={50} height={50}  sizes='100vw'></Image>
+                            <p>Rate</p></div>
+                            <div>{result.compatibility_report?.family_compatibility?.score}</div>
+                            <div>{result.compatibility_report?.family_compatibility?.narrative}</div>  
+
+                            <div>{result.compatibility_report?.overall_compatibility?.score}</div>
+                            <div>{result.compatibility_report?.overall_compatibility?.narrative}</div> 
+
+              </div>
+              
+          </div>
+          )}
+          
+        </div>
+
         <div style = {{alignItems:'center',display:'flex',justifyContent:'center',marginTop:'30px'}}>
     <footer style ={{width:'1032px', height:'291px', display:'flex', justifyContent:'space-around', paddingTop: '25px', }}>
 
@@ -189,7 +257,7 @@ export default function Home() {
 
               <div style= {{textAlign: 'center'}}>
 
-                    <Button colorScheme='yellow' size='sm' onClick={popUpFunction}>
+                    <Button isDisabled={!(result&&result.compatibility_report)} colorScheme='yellow' size='sm' onClick={()=> openReport('couple')}>
                         Get Report
                       </Button>
 
@@ -221,7 +289,7 @@ export default function Home() {
                   </div>        
 
                       <div style= {{textAlign: 'center'}}>
-                            <Button colorScheme='yellow' size='sm' onClick={popUpFunction}>
+                            <Button isDisabled={!(result&&result.compatibility_report)} colorScheme='yellow' size='sm' onClick={()=>openReport('friends')}>
                                 Get Report
                               </Button>
                       </div>
@@ -256,7 +324,7 @@ export default function Home() {
               </div>
 
               <div style= {{textAlign: 'center'}}>
-                  <Button colorScheme='yellow' size='sm' onClick={popUpFunction}>
+                  <Button isDisabled={!(result&&result.compatibility_report)} colorScheme='yellow' size='sm' onClick={()=>openReport('family')}>
                         Get Report
                       </Button>
                 </div>
@@ -268,43 +336,41 @@ export default function Home() {
     </footer>
     </div>
 
+    {popReport.isOpen&& (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <div >
+          {popReport.type === 'couple' && (<div>
+            
+             <div className={styles.modalTitle}>適合指數{result.compatibility_report?.couple_compatibility?.score}%</div>
+             <div className={styles.modalContent}>{result.compatibility_report?.couple_compatibility?.narrative}</div>
+            </div>)}
+          
+          {popReport.type === 'friends' && (<div>
+            
+            <div className={styles.modalTitle}>適合指數{result.compatibility_report?.friends_compatibility?.score}%</div>
+            <div className={styles.modalContent}>{result.compatibility_report?.friends_compatibility?.narrative}</div>
+           </div>)}
 
-    {popUp && (
-         <div style={{  
-          // display: 'block',
-            // position: 'fixed',
-            // top: '0',
-            // left: '0',
-            // width: '100%',
-            // height: '100%',
-            // backgroundColor: '#000814', /* 半透明的遮罩背景 */
-            // zIndex: '1000', /* 置於最上層 */ }}>
-          position:'fixed', top:'0', left:'0',width:'100%', height:'100%', background:'#58697466',zIndex: '1000'}}>
-            <div 
-            style= {{ 
-              position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '7px solid #CDEFC7', borderRadius: '10px',zIndex: '1001',textAlign:'center',padding:'5%',background:'#CDEFC7'
-                // position: 'absolute',
-                // top: '50%', /* 將窗口置中 */
-                // left: '50%',
-                // transform: 'translate(-50%, -50%)', /* 水平和垂直置中 */
-                // backgroundColor: 'white',
-                // border: '5px solid #e5e5e5',
-                // borderRadius: '20px',
-                // padding: '20px',
-                // zIndex: '1001', /* 置於遮罩之上 */
-                       }}
-         >
+          {popReport.type === 'family' && (<div>
+            
+            <div className={styles.modalTitle}>適合指數{result.compatibility_report?.family_compatibility?.score}%</div>
+            <div className={styles.modalContent}>{result.compatibility_report?.family_compatibility?.narrative}</div>
+           </div>)}
+
+           <Button colorScheme='yellow' size='sm' onClick={closePopup}>
+                        Close
+                      </Button>
+          </div>
+      </div>
+    </div>)}
+
+
+    
+
                         {/* {whichButton=='fun'?<div>fun</div>:whichButton=='work'?<div>work</div>:<div>family</div>} */}
-                              <div><Image src={"/Star.svg"}  width={50} height={50}  sizes='100vw'></Image>
-                              <p>Rate</p></div>
-                              <div>{result.compatibility_report?.fun_compatibility?.score}</div>
-                              <div>{result.compatibility_report?.fun_compatibility?.narrative}</div>                              
+                                                                       
                               
-                              <Button colorScheme='orange' size='xs' onClick={closePopup}>Close</Button>
-                       
-            </div>
-         </div>
-                     )}  
 
   </div>
   </ChakraProvider>
