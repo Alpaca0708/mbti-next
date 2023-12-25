@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import {useState,useEffect} from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { useRef } from 'react';
 
 
 
@@ -97,6 +98,12 @@ export default function Home() {
     }
   }, [result]); 
 
+  const welcomeLink = useRef(null);
+  const scrollToMyDiv = () => {
+    // 使用 scrollIntoView 方法滚动到 myDivRef
+    welcomeLink.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   
 
   return (
@@ -110,24 +117,41 @@ export default function Home() {
                         bottom: '100px', 
                         transform: 'translateX(-50%)', // 这将确保按钮在水平方向上居中
                         borderRadius:'20px',
-                      }}>Welcome</Button>
-        
-
+                      }} 
+                      onClick={scrollToMyDiv}>Welcome</Button>
       </div>
 
-
-
-
       <div className="App">
-        <header style= {{ width: '100%', height: '265px', flexShrink: '0', alignItems: 'center', flexDirection: 'column', }}>
-           <Image src={"/Banner2.png"} width={0} height={0} sizes='100vw'  style={{ width: '100%', height: '100%', objectFit: 'cover' }}></Image>
+        <div style={{
+                     position: 'relative'}}>
+        <header style= {{ 
+                        width: '100%', 
+                        height: '265px', 
+                        flexShrink: '0', 
+                        alignItems: 'center', 
+                        flexDirection: 'column', 
+                        position: 'relative'
+                        }}>
+           <Image src={"/Banner2.png"} width={0} height={0} sizes='100vw'  
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    position: 'absolute', 
+                    top:'0px' 
+                    }}>
+                      
+                    </Image>
         </header>
+        </div>
+
+
         <div style= {{width:'100%', display:'inline-flex', padding:'5px', alignItems:'flex-start' }}>
 
       <div style = {{width:'100%', display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-start', gap: '5px', padding:'15px'}}>
 
 
-          <header type={{color: 'var(--heading-title-color, #152536)', fontFamily: 'Lemonada', fontSize: '24px', fontStyle: 'normal', fontWeight: '575', lineHeight: 'normal',}}>
+          <header ref={welcomeLink}type={{color: 'var(--heading-title-color, #152536)', fontFamily: 'Lemonada', fontSize: '24px', fontStyle: 'normal', fontWeight: '575', lineHeight: 'normal',}}>
           Male
           </header>
         <div style={{width:'100%', display: 'flex', alignItems: 'center', borderRadius: '12px', border: '1px solid #7F9EBD', background: 'var(--default-white, #FFF)',}}>
