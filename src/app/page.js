@@ -14,6 +14,11 @@ export default function Home() {
   
   
   const MBTIOptions = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ","ISTP", "ISFP", "ESTP", "ESFP" ]
+  const welcomeLink = useRef(null);
+  const scrollToMyDiv = () => {
+    // 使用 scrollIntoView 方法滚动到 myDivRef
+    welcomeLink.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const [selectMBTI,setSelectMBTI] = useState('ENTP') 
   const MBTIChanged =(event) => {
@@ -98,11 +103,7 @@ export default function Home() {
     }
   }, [result]); 
 
-  const welcomeLink = useRef(null);
-  const scrollToMyDiv = () => {
-    // 使用 scrollIntoView 方法滚动到 myDivRef
-    welcomeLink.current.scrollIntoView({ behavior: 'smooth' });
-  };
+
 
   
 
@@ -222,7 +223,7 @@ export default function Home() {
               {loading && 
               (<div className={styles.loadWrapp}>
               <div className={styles.load2}>
-              <p>Data Loading...</p>  
+              <p>Data Loading</p>  
               <div className={styles.line}></div>
               <div className={styles.line}></div>
               <div className={styles.line}></div>
