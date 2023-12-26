@@ -112,7 +112,8 @@ export default function Home() {
       <div style= {{width:'auto', height:'720px', overflow: 'hidden', position: 'relative', minWidth: '500px', minHeight: '500px' }}>
         <Image src={"/Banner.png"} width={0} height={0} sizes='100vw' 
         style={{width:'100%', height:'100%', objectFit: 'cover', }}></Image>
-        <Button colorScheme='facebook' size='lg' variant='outline' style={{ 
+        <Button colorScheme='facebook' size='lg' variant='outline' 
+        style={{ 
                         position: 'absolute', 
                         left: '50%', 
                         bottom: '100px', 
@@ -120,6 +121,17 @@ export default function Home() {
                         borderRadius:'20px',
                       }} 
                       onClick={scrollToMyDiv}>Welcome</Button>
+        <p style={{
+                    position: 'absolute', 
+                    left: '50%', 
+                    top:'200px',
+                    transform: 'translateX(-50%)',
+                    fontFamily:'Bookman, URW Bookman L, serif',
+                    fontWeight: 'bold',
+                    fontSize:'150px',
+                    letterSpacing:'30px',
+                    color:'#f4faff'
+                  }}>MBTI</p>
       </div>
 
       <div className="App">
