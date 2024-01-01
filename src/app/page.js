@@ -6,6 +6,9 @@ import {useState,useEffect} from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { useRef } from 'react';
+import firebase from "./firebaseConfig";
+import db from './firebaseConfig'; 
+
 
 
 
@@ -104,6 +107,37 @@ export default function Home() {
   }, [result]); 
 
 
+  //聊天視窗
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = firebase.firestore()
+      .collection('messages')
+      .orderBy('timestamp')
+      .onSnapshot(snapshot => {
+        const fetchedMessages = snapshot.docs.map(doc => {
+          return { id: doc.id, ...doc.data() };
+        });
+        setMessages(fetchedMessages);
+      });
+
+    return () => unsubscribe();
+  }, []);
+
+  const sendMessage = () => {
+    if (newMessage.trim() !== '') {
+      firebase.firestore().collection('messages').add({
+        text: newMessage,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      setNewMessage('');
+    }
+  };
+
+
+
+
 
   
 
@@ -121,6 +155,29 @@ export default function Home() {
                         borderRadius:'20px',
                       }} 
                       onClick={scrollToMyDiv}>Welcome</Button>
+          //聊天視窗
+
+          <div>
+      <div>
+        {messages.map(message => (
+          <p key={message.id}>{message.text}</p>
+        ))}
+      </div>
+      <input
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        placeholder="Type a message"
+      />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
+
+
+
+
+
+
+
         <p style={{
                     position: 'absolute', 
                     left: '50%', 
