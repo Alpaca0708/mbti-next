@@ -13,6 +13,11 @@ pnpm dev
 # or
 bun dev
 ```
+# Node Version Manager
+if nvm not found: 
+```
+source ~/.nvm/nvm.sh
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

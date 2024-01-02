@@ -6,8 +6,8 @@ import {useState,useEffect} from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { useRef } from 'react';
-import firebase from "./firebaseConfig";
-import db from './firebaseConfig'; 
+import {firebase} from "./firebaseConfig";
+import {db} from './firebaseConfig'; 
 
 
 
@@ -156,7 +156,7 @@ export default function Home() {
                       }} 
                       onClick={scrollToMyDiv}>Welcome</Button>
           //聊天視窗
-
+{/* 
           <div>
       <div>
         {messages.map(message => (
@@ -170,7 +170,7 @@ export default function Home() {
       />
       <button onClick={sendMessage}>Send</button>
     </div>
-  );
+  ); */}
 
 
 
