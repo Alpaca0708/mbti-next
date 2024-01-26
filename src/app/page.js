@@ -88,6 +88,8 @@ export default function Home() {
     const data = await response.json() //後端傳回給前端的資料
     console.log("data:",data)
     setResult(data)
+    setPopUp(false);
+
     
   };
 
@@ -105,7 +107,9 @@ export default function Home() {
   }, [result]); 
 
   useEffect(() => {
-    setLoading(true) && {popUpFunction}
+    if(popUp){
+      setLoading(true) 
+    }
   },[popUp])
 
   
@@ -254,7 +258,7 @@ export default function Home() {
               </div>
               </div>
               )}            
-              <div style={{
+              {/* <div style={{
                 display:'none',
                 alignItems:'center'
               }}>
@@ -274,7 +278,7 @@ export default function Home() {
                             <div>{result.compatibility_report?.overall_compatibility?.score}</div>
                             <div>{result.compatibility_report?.overall_compatibility?.narrative}</div> 
 
-              </div>
+              </div> */}
               
           </div>
           )}
