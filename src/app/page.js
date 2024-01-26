@@ -88,7 +88,9 @@ export default function Home() {
     const data = await response.json() //後端傳回給前端的資料
     console.log("data:",data)
     setResult(data)
-    setPopUp(false);
+    setPopUp(
+      
+    );
 
     
   };
@@ -102,7 +104,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (result && result.compatibility_report) {
-      setLoading(false); // 如果 result 有数据，停止显示加载动画
+      setLoading(false); // 如果 result 有數據，停止顯示加載動畫
     }
   }, [result]); 
 
@@ -133,7 +135,7 @@ export default function Home() {
                   position: 'absolute', 
                   left: '50%', 
                   bottom: '135px', 
-                  transform: 'translateX(-50%)', // 这将确保按钮在水平方向上居中
+                  transform: 'translateX(-50%)', // 確保按鈕在水平方向上居中
                   borderRadius:'20px',
                 }} 
                 >Chat to ENFP</Button>
