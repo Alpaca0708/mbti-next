@@ -6,6 +6,7 @@ import {useState,useEffect} from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { useRef } from 'react';
+import Link from 'next/link';
 
 
 
@@ -38,12 +39,12 @@ export default function Home() {
     setInputValue2(e.target.value);
   }; 
 
-  const [inputDate, setInputDate] = useState ('Birthday')
+  const [inputDate, setInputDate] = useState ('1991-01-01')
   const dateChange = (e) => {
     setInputDate(e.target.value);
   }; 
 
-  const [inputDate2, setInputDate2] = useState ('Birthday')
+  const [inputDate2, setInputDate2] = useState ('1991-01-01')
   const dateChange2 = (e) => {
     setInputDate2(e.target.value);
   }; 
@@ -103,7 +104,9 @@ export default function Home() {
     }
   }, [result]); 
 
-
+  useEffect(() => {
+    setLoading(true) && {popUpFunction}
+  },[popUp])
 
   
 
@@ -116,11 +119,20 @@ export default function Home() {
         style={{ 
                         position: 'absolute', 
                         left: '50%', 
-                        bottom: '100px', 
+                        bottom: '200px', 
                         transform: 'translateX(-50%)', // 这将确保按钮在水平方向上居中
                         borderRadius:'20px',
                       }} 
                       onClick={scrollToMyDiv}>Welcome</Button>
+        <Button colorScheme='orange' size='lg' 
+                style={{ 
+                  position: 'absolute', 
+                  left: '50%', 
+                  bottom: '135px', 
+                  transform: 'translateX(-50%)', // 这将确保按钮在水平方向上居中
+                  borderRadius:'20px',
+                }} 
+                >Chat to ENFP</Button>
         <p style={{
                     position: 'absolute', 
                     left: '50%', 
