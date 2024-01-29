@@ -17,7 +17,7 @@ export default function Home() {
   const MBTIOptions = ["INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ","ISTP", "ISFP", "ESTP", "ESFP" ]
   const welcomeLink = useRef(null);
   const scrollToMyDiv = () => {
-    // 使用 scrollIntoView 方法滚动到 myDivRef
+    // 使用 scrollIntoView 方法滾動到 myDivRef
     welcomeLink.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -126,7 +126,7 @@ export default function Home() {
                         position: 'absolute', 
                         left: '50%', 
                         bottom: '200px', 
-                        transform: 'translateX(-50%)', // 这将确保按钮在水平方向上居中
+                        transform: 'translateX(-50%)', // 這將確保按鈕在水平方向上居中
                         borderRadius:'20px',
                       }} 
                       onClick={scrollToMyDiv}>Welcome</Button>
